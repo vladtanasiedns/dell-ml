@@ -3,6 +3,7 @@ import ml
 import pandas as pd
 import numpy as np
 import json
+from utils import allowed_file
 
 app = Flask(__name__)
 
@@ -12,20 +13,14 @@ app = Flask(__name__)
 # df = df.dropna()
 # df = df.drop(["slow_dispatch", "velocity"], axis=1)
 
-@app.route("/")
-def test():
-    data = encode.encode(df)
-    preds = predict.predict(data)
-    preds = np.array(preds)
-    preds_flat = preds.flatten()
-    x = [str(x) for x in preds_flat]
-    return json.dumps(x)
-
-ALLOWED_EXTENSIONS = { 'csv' }
-
-def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+# @app.route("/")
+# def test():
+#     data = encode.encode(df)
+#     preds = predict.predict(data)
+#     preds = np.array(preds)
+#     preds_flat = preds.flatten()
+#     x = [str(x) for x in preds_flat]
+#     return json.dumps(x)
 
 @app.route("/predict", methods=["GET", "POST"])
 def predict():
